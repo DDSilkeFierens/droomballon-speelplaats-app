@@ -8,28 +8,47 @@ st.set_page_config(
     layout="wide"
 )
 
-# Vrolijke kleuter-styling: grotere knoppen, afgeronde kaarten en heldere kleuren
+# Dark Mode Styling
 st.markdown("""
     <style>
-    /* Algemene achtergrond */
+    /* Donkere achtergrond voor de hele app */
     .stApp {
-        background-color: #F0F9FF;
+        background-color: #0F172A !important;
     }
-    /* Grote speelse knoppen */
+    
+    /* Zorg dat alle teksten helder wit/lichtblauw zijn */
+    h1, h2, h3, h4, h5, h6, p, label, .stMarkdown, span {
+        color: #F8FAFC !important;
+    }
+
+    /* Subtitels een zachte blauwe tint geven */
+    h3 {
+        color: #38BDF8 !important;
+    }
+
+    /* Opvallende knoppen in dark mode */
     .stButton>button {
-        font-size: 24px !important;
+        font-size: 22px !important;
         font-weight: bold !important;
-        padding: 20px !important;
+        padding: 18px !important;
         border-radius: 20px !important;
-        border: 3px solid #3B82F6 !important;
-        background-color: #FFFFFF !important;
-        color: #1E3A8A !important;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        border: 2px solid #38BDF8 !important;
+        background-color: #1E293B !important;
+        color: #F8FAFC !important;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
         width: 100%;
     }
+    
     .stButton>button:hover {
-        background-color: #DBEAFE !important;
+        background-color: #0284C7 !important;
+        color: #FFFFFF !important;
+        border-color: #38BDF8 !important;
         transform: scale(1.02);
+    }
+    
+    /* Radio buttons beter leesbaar maken */
+    .stRadio label {
+        color: #F8FAFC !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -45,7 +64,7 @@ with col_h2:
 
 st.write("---")
 
-# Zijkant navigatie met grote pictogram-tekst
+# Zijkant navigatie
 zone = st.sidebar.radio(
     "📍 Kies je speelplaats:",
     ["🏠 Welkom", "🛝 Kleuterspeelplaats", "🧸 Peuterspeelplaats"]
@@ -58,7 +77,6 @@ if zone == "🏠 Welkom":
 
 elif zone == "🛝 Kleuterspeelplaats":
     
-    # Keuze tussen de 2 hoofdthema's via grote knoppen in plaats van tekst-tabs
     oefening = st.radio(
         "Wat gaan we oefenen?",
         ["🛑 Het Herstelwiel", "🔔 Bel & Opruimen"],
@@ -67,7 +85,7 @@ elif zone == "🛝 Kleuterspeelplaats":
 
     st.write("---")
 
-    # THEMA 1: HERSTELWIEL (Visuele keuzes)
+    # THEMA 1: HERSTELWIEL
     if oefening == "🛑 Het Herstelwiel":
         st.header("Wat doe je bij een probleem? 🛑")
         
