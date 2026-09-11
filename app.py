@@ -8,105 +8,122 @@ st.set_page_config(
     layout="wide"
 )
 
-# Kleuter-vriendelijke styling
+# Vrolijke kleuter-styling: grotere knoppen, afgeronde kaarten en heldere kleuren
 st.markdown("""
     <style>
+    /* Algemene achtergrond */
+    .stApp {
+        background-color: #F0F9FF;
+    }
+    /* Grote speelse knoppen */
     .stButton>button {
-        font-size: 20px !important;
-        padding: 15px 25px !important;
-        border-radius: 15px !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
+        padding: 20px !important;
+        border-radius: 20px !important;
+        border: 3px solid #3B82F6 !important;
+        background-color: #FFFFFF !important;
+        color: #1E3A8A !important;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         width: 100%;
+    }
+    .stButton>button:hover {
+        background-color: #DBEAFE !important;
+        transform: scale(1.02);
     }
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🎈 Basisschool De Droomballon")
+# Titelbalk met figuren
+col_h1, col_h2 = st.columns([1, 4])
+with col_h1:
+    if os.path.exists("personages.png"):
+        st.image("personages.png", width=130)
+with col_h2:
+    st.title("🎈 De Droomballon")
+    st.write("### Kies met Wiebel en Pola waar je wil spelen!")
 
-# Afbeelding van Wiebel en Pola tonen als deze geüpload is
-if os.path.exists("personages.png"):
-    st.image("personages.png", width=250)
+st.write("---")
 
-st.write("Samen met **Wiebel** en **Pola** leren we de afspraken op de speelplaats!")
-
-# Navigatie zijkant
+# Zijkant navigatie met grote pictogram-tekst
 zone = st.sidebar.radio(
-    "Kies een speelplaats:",
-    ["Hoofdmenu", "Peuterspeelplaats", "Kleuterspeelplaats", "L1234 & L56"]
+    "📍 Kies je speelplaats:",
+    ["🏠 Welkom", "🛝 Kleuterspeelplaats", "🧸 Peuterspeelplaats"]
 )
 
-if zone == "Hoofdmenu":
-    st.subheader("Welkom! Kies een zone in het menu links om te beginnen.")
+if zone == "🏠 Welkom":
+    st.header("Klik aan de zijkant op de speelplaats! 🛝")
+    if os.path.exists("personages.png"):
+        st.image("personages.png", width=350)
 
-elif zone == "Kleuterspeelplaats":
-    st.header("🛝 De Kleuterspeelplaats")
+elif zone == "🛝 Kleuterspeelplaats":
     
-    tab1, tab2 = st.tabs(["🛞 Het Herstelwiel", "🔔 De Bel & Opruimen"])
-    
-    # TAB 1: Herstelwiel
-    with tab1:
-        st.subheader("Wat doe je bij een probleem op de speelplaats?")
+    # Keuze tussen de 2 hoofdthema's via grote knoppen in plaats van tekst-tabs
+    oefening = st.radio(
+        "Wat gaan we oefenen?",
+        ["🛑 Het Herstelwiel", "🔔 Bel & Opruimen"],
+        horizontal=True
+    )
+
+    st.write("---")
+
+    # THEMA 1: HERSTELWIEL (Visuele keuzes)
+    if oefening == "🛑 Het Herstelwiel":
+        st.header("Wat doe je bij een probleem? 🛑")
         
-        scenario = st.selectbox(
-            "Kies een situatie:",
-            ["Iemand pakt je speelgoed af", "Er is een botsing geweest", "Je bent heel boos"]
-        )
+        col1, col2 = st.columns(2)
         
+        with col1:
+            st.write("### 🛑 Zeg STOP")
+            if os.path.exists("stop.png"):
+                st.image("stop.png", use_column_width=True)
+            if st.button("👉 Kies STOP!"):
+                st.success("Goed zo! Zeg duidelijk STOP als je iets niet fijn vindt.")
+
+        with col2:
+            st.write("### 🙋‍♂️ Vraag hulp aan de juf")
+            if os.path.exists("juuf.png"):
+                st.image("juuf.png", use_column_width=True)
+            if st.button("👉 Roep 'Juuuf?'"):
+                st.success("Prima! Hulp vragen is altijd slim.")
+
         st.write("---")
         
-        if scenario == "Iemand pakt je speelgoed af":
-            st.write("### 🛑 Er pakt iemand zomaar je fiets af! Wat doe je?")
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("🔴 Ik zeg STOP!"):
-                    st.success("Goed zo! Zeg duidelijk STOP als je iets niet fijn vindt.")
-            with col2:
-                if st.button("🙋‍♂️ Ik roep 'Juuuf?'"):
-                    st.success("Prima! Als het niet lukt, zoek je hulp bij de juf of meester.")
-
-        elif scenario == "Er is een botsing geweest":
-            st.write("### 🤝 Je bent per ongeluk tegen iemand aan gelopen. Wat doe je?")
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                if st.button("💬 Zeg SORRY"):
-                    st.success("Super! Een eerlijke 'sorry' helpt meteen.")
-            with col2:
-                if st.button("✋ High-five / Knuffel"):
-                    st.success("Mooi zo! Maak het weer goed met elkaar.")
-            with col3:
-                if st.button("😡 Boos weglopen"):
-                    st.error("Probeer het liever goed te maken met het Herstelwiel!")
-
-        elif scenario == "Je bent heel boos":
-            st.write("### 🧘 Je bent heel erg boos. Hoe koel je af?")
-            if st.button("🔢 Ik tel tot 10 en koel af"):
+        col3, col4 = st.columns(2)
+        
+        with col3:
+            st.write("### 💬 Zeg SORRY")
+            if os.path.exists("sorry.png"):
+                st.image("sorry.png", use_column_width=True)
+            if st.button("👉 Zeg SORRY"):
                 st.balloons()
-                st.success("1... 2... 3... 4... 5... 6... 7... 8... 9... 10! Rustig worden helpt!")
+                st.success("Super! Maak het weer goed.")
 
-    # TAB 2: De Bel & Opruimen
-    with tab2:
-        st.subheader("Wat doe je op de speelplaats?")
-        
-        oefening = st.radio("Kies een oefening:", ["🔔 De Bel gaat!", "🧸 Opruimen"])
-        
-        st.write("---")
-        
-        if oefening == "🔔 De Bel gaat!":
-            st.write("### 🔔 Riiiiing! De 2e bel gaat op de speelplaats. Wat doe je?")
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("🚶 Netjes in de rij staan"):
-                    st.balloons()
-                    st.success("Juist! Bij de 2e bel sta je in de rij. Na het liedje ben je stil!")
-            with col2:
-                if st.button("🛝 Gewoon verder spelen"):
-                    st.error("Oeps! Bij de bel moeten we stoppen met spelen en in de rij gaan staan.")
+        with col4:
+            st.write("### 🤝 High-five of Knuffel")
+            if os.path.exists("knuffel.png"):
+                st.image("knuffel.png", use_column_width=True)
+            if st.button("👉 Geef een knuffel"):
+                st.balloons()
+                st.success("Mooi zo! Samen weer vrienden.")
 
-        elif oefening == "🧸 Opruimen":
-            st.write("### 🚜 Het is tijd om naar binnen te gaan. Wat doe je met de driewieler en de schepjes?")
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("📦 Alles netjes opruimen"):
-                    st.success("Topper! We ruimen samen al het materiaal op.")
-            with col2:
-                if st.button("🍃 Laten liggen in de zandbak"):
-                    st.error("Vergeet niet: we hebben respect voor het materiaal en ruimen alles op!")
+    # THEMA 2: BEL EN OPRUIMEN
+    elif oefening == "🔔 Bel & Opruimen":
+        st.header("Wat doe je op de speelplaats? 🧼")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("### 🔔 De bel gaat!")
+            if os.path.exists("rij.png"):
+                st.image("rij.png", use_column_width=True)
+            if st.button("👉 In de rij staan"):
+                st.balloons()
+                st.success("Bij de 2e bel sta je netjes in de rij en ben je stil!")
+
+        with col2:
+            st.write("### 📦 Opruimtijd!")
+            if os.path.exists("opruimen.png"):
+                st.image("opruimen.png", use_column_width=True)
+            if st.button("👉 Speelgoed opruimen"):
+                st.success("Topper! We ruimen samen alles netjes op.")
